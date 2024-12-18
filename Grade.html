@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Grade Hover Card</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Animated background gradient */
+        @keyframes bgAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            background: linear-gradient(135deg, #C1F0F6, #FDE6F0, #F9E6C9);
+            background-size: 200% 200%;
+            animation: bgAnimation 20s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            backdrop-filter: blur(20px) brightness(1.1);
+            z-index: -1;
+        }
+
+        /* Card animations */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sheen {
+            0% {
+                transform: skewX(-20deg) translateX(-150%);
+            }
+            100% {
+                transform: skewX(-20deg) translateX(200%);
+            }
+        }
+
+        /* Shimmer for heading text */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* Fade-and-zoom animation for the result box */
+        @keyframes fadeZoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Animated gradient background for the result */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 0%;
+            }
+        }
+
+        .card {
+            position: relative;
+            width: 400px;
+            max-width: 90%;
+            background: linear-gradient(135deg, #ffffff 0%, #effbff 100%);
+            border-radius: 20px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            padding: 40px 20px 30px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            animation: fadeInUp 0.8s ease forwards;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            
+            /* Glowing gradient border */
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 20px;
+            pointer-events: none;
+            background: linear-gradient(45deg, rgba(0,255,255,0.3), rgba(255,0,255,0.3));
+            z-index: 1;
+            mix-blend-mode: screen; 
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 20px;
+            background: linear-gradient(to right, rgba(255,255,255,0.3), rgba(255,255,255,0));
+            animation: sheen 3s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 1.8rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: linear-gradient(to right, #ff6ec4, #7873f5, #52f3e8);
+            background-size: 200% auto;
+            color: #fff;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 2s linear infinite;
+        }
+
+        #result {
+            font-size: 1.2rem;
+            color: #333;
+            background: linear-gradient(to right, #fffbdf, #dff8fb, #fff0fa);
+            background-size: 200% 100%;
+            border: 1px solid #dddddd;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 300px;
+            margin: 0 auto;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeZoomIn 1s ease 0.7s forwards, gradientShift 4s ease-in-out infinite alternate;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #result:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        #Texts {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="https://i.pinimg.com/736x/79/22/4d/79224d25bd21be7255fa987c9b7607a0.jpg" alt="Profile Picture">
+        <h1 id="Texts">Grade</h1>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let score = prompt("Enter score (0-100):");
+        let grade;
+
+        if (score >= 80) {
+            grade = 4;
+        } else if (score >= 70) {
+            grade = 3;
+        } else if (score >= 60) {
+            grade = 2;
+        } else if (score >= 50) {
+            grade = 1;
+        } else {
+            grade = 0;
+        }
+
+        document.getElementById("result").innerHTML = grade;
+    </script>
+</body>
+</html>
